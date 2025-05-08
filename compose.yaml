@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: tarefas-db
+    restart: always
+    environment:
+      POSTGRES_DB: tarefasdb
+      POSTGRES_USER: user1
+      POSTGRES_PASSWORD: 12345
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
