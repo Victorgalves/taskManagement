@@ -13,3 +13,12 @@ services:
       - "5433:5432"
     volumes:
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  app:
+    build: .
+    container_name: tarefas-app
+    depends_on:
+      - postgres
+    stdin_open: true     # para o Scanner funcionar
+    tty: true            # para manter o terminal interativo
+

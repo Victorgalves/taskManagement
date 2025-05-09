@@ -1,6 +1,5 @@
 package com.exemple.taskmanagement.menu;
 
-
 import com.exemple.taskmanagement.task.Task;
 import com.exemple.taskmanagement.task.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +17,29 @@ public class Menu {
     private final Scanner scanner = new Scanner(System.in);
 
     public void exibir() {
+        System.out.flush();
+        try {
+            System.in.read();
+        } catch (Exception e) {
+        }
+
         int opcao;
         do {
             System.out.println("\n--- Menu de Tasks ---");
             System.out.println("1. Criar nova tarefa");
             System.out.println("2. Listar tarefas");
-            System.out.println("3. Atualizar status de tarefa");
+            System.out.println("3. AtTualizar status de tarefa");
             System.out.println("4. Remover tarefa");
             System.out.println("5. Sair");
             System.out.print("Escolha uma opção: ");
+            System.out.flush();
+
+            while (!scanner.hasNextInt()) {
+                scanner.nextLine();
+                System.out.print("Opção inválida. Digite um número: ");
+                System.out.flush();
+            }
+
             opcao = scanner.nextInt();
             scanner.nextLine();
 
@@ -44,14 +57,23 @@ public class Menu {
 
     private void createTask() {
         System.out.print("Título: ");
+        System.out.flush();
         String title = scanner.nextLine();
+
         System.out.print("Descrição: ");
+        System.out.flush();
         String description = scanner.nextLine();
+
         System.out.print("Status (PENDENTE, CONCLUIDA, CANCELADA): ");
+        System.out.flush();
         String status = scanner.nextLine();
+
         System.out.print("ID da categoria: ");
+        System.out.flush();
         Long categoryId = scanner.nextLong();
+
         System.out.print("ID do responsável: ");
+        System.out.flush();
         Long responsibleId = scanner.nextLong();
         scanner.nextLine();
 
@@ -70,16 +92,20 @@ public class Menu {
         } else {
             tarefas.forEach(t -> {
                 System.out.printf("\nID: %d | Título: %s | Status: %s\n", t.getId(), t.getTile(), t.getStatus());
-                System.out.printf("Categoria: %s | Responsável: %s\n", t.getCategory().getName(), t.getResponsible().getName());
+                System.out.printf("Categoria: %s | Responsável: %s\n",
+                        t.getCategory().getName(), t.getResponsible().getName());
             });
         }
     }
 
     private void attStatus() {
         System.out.print("ID da tarefa: ");
+        System.out.flush();
         Long id = scanner.nextLong();
         scanner.nextLine();
+
         System.out.print("Novo status: ");
+        System.out.flush();
         String novoStatus = scanner.nextLine();
 
         try {
@@ -92,6 +118,7 @@ public class Menu {
 
     private void removeTask() {
         System.out.print("ID da tarefa: ");
+        System.out.flush();
         Long id = scanner.nextLong();
         scanner.nextLine();
 
@@ -102,4 +129,3 @@ public class Menu {
         }
     }
 }
-
