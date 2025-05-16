@@ -1,15 +1,15 @@
 package com.exemple.taskmanagement.responsible;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 
 public class Responsible {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "responsible_id")
+
     private Long id;
     private String name;
 
