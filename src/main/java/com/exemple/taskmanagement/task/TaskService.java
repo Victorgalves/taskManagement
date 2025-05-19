@@ -45,8 +45,9 @@ public class TaskService {
     }
 
     public List<Task> listTasks() {
-        return taskRepository.findAll();
+        return taskRepository.findAllWithCategoryAndResponsible();
     }
+
 
     public boolean removeTasks(Long id) {
         if (taskRepository.existsById(id)) {
