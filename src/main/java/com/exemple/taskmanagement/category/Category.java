@@ -1,6 +1,9 @@
 package com.exemple.taskmanagement.category;
 
+import com.exemple.taskmanagement.task.Task;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Category {
@@ -12,6 +15,9 @@ public class Category {
 
     private String name;
     private String description;
+
+    @OneToMany(mappedBy = "category")
+    private List<Task> tasks;
 
     public Category(int id, String name, String description) {
         this.id = id;

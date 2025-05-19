@@ -23,6 +23,10 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
+    public List<Object[]> countTaskCategory() {
+        return categoryRepository.countTaskCategory();
+    }
+
     public boolean removeCategories(Long id) {
         if (categoryRepository.existsById(id)) {
             categoryRepository.deleteById(id);

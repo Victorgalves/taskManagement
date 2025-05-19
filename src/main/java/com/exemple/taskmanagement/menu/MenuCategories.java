@@ -23,8 +23,9 @@ public class MenuCategories {
             System.out.println("\n--- Menu de Categorias ---");
             System.out.println("1. Criar nova categoria");
             System.out.println("2. Listar categorias");
-            System.out.println("3. Remover categoria");
-            System.out.println("4. Sair");
+            System.out.println("3. Quantidade de tarefas por Categoria");
+            System.out.println("4. Remover categoria");
+            System.out.println("5. Sair");
             System.out.print("Escolha uma opção: ");
             System.out.flush();
 
@@ -39,12 +40,13 @@ public class MenuCategories {
             switch (opcao) {
                 case 1 -> createCategory();
                 case 2 -> listCategory();
-                case 3 -> removeCategory();
-                case 4 -> System.out.println("Saindo...");
+                case 3 -> countTaskCategory();
+                case 4 -> removeCategory();
+                case 5 -> System.out.println("Saindo...");
                 default -> System.out.println("Opção inválida!");
             }
 
-        } while (opcao != 4);
+        } while (opcao != 5);
     }
 
     private void createCategory() {
@@ -86,5 +88,24 @@ public class MenuCategories {
         } else {
             System.out.println("Categoria não encontrada.");
         }
+    }
+
+    private void countTaskCategory() {
+        List<Object[]> categoriesWithTaskCount = categoryService.countTaskCategory();
+
+        if (categoriesWithTaskCount.isEmpty()) {
+            System.out.println("Nenhuma categoria encontrada.");
+            return;
+        }
+
+        System.out.println("\n--- Lista de Categorias com Contagem de Tarefas ---");
+        for (Object[] result : categoriesWithTaskCount) {
+            Category category = (Category) result[0];
+            Long taskCount = (Long) result[1];
+            System.out.println("ID: " + category.getId() +
+                    ", Nome: " + category.getName() +
+                    ", Tarefas: " + taskCount);
+        }
+        System.out.println("---------------------------------------------------\n");
     }
 }
