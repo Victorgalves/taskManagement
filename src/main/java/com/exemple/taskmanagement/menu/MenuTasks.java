@@ -25,7 +25,7 @@ public class MenuTasks {
             System.out.println("2. Listar tarefas");
             System.out.println("3. Atualizar status de tarefa");
             System.out.println("4. Remover tarefa");
-            System.out.println("5. Sair");
+            System.out.println("5. Voltar");
             System.out.print("Escolha uma opção: ");
             System.out.flush();
 

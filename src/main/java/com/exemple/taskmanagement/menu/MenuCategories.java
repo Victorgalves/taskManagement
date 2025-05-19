@@ -22,10 +22,11 @@ public class MenuCategories {
         do {
             System.out.println("\n--- Menu de Categorias ---");
             System.out.println("1. Criar nova categoria");
-            System.out.println("2. Listar categorias");
-            System.out.println("3. Quantidade de tarefas por Categoria");
-            System.out.println("4. Remover categoria");
-            System.out.println("5. Sair");
+            System.out.println("2. Listar categorias ativas");
+            System.out.println("3. Listar todas categorias");
+            System.out.println("4. Quantidade de tarefas por Categoria");
+            System.out.println("5. Remover categoria");
+            System.out.println("6. Voltar");
             System.out.print("Escolha uma opção: ");
             System.out.flush();
 
@@ -39,14 +40,15 @@ public class MenuCategories {
 
             switch (opcao) {
                 case 1 -> createCategory();
-                case 2 -> listCategory();
-                case 3 -> countTaskCategory();
-                case 4 -> removeCategory();
-                case 5 -> System.out.println("Saindo...");
+                case 2 -> listCategoryAtivas();
+                case 3 -> listCategory();
+                case 4 -> countTaskCategory();
+                case 5 -> removeCategory();
+                case 6 -> System.out.println("Saindo...");
                 default -> System.out.println("Opção inválida!");
             }
 
-        } while (opcao != 5);
+        } while (opcao != 6);
     }
 
     private void createCategory() {
@@ -63,6 +65,17 @@ public class MenuCategories {
             System.out.println("Categoria criada com sucesso!");
         } catch (Exception e) {
             System.out.println("Erro: " + e.getMessage());
+        }
+    }
+
+    private void listCategoryAtivas() {
+        List<Category> categories = categoryService.listCategoriesAtivos();
+        if (categories.isEmpty()) {
+            System.out.println("Nenhuma categoria encontrada.");
+        } else {
+            categories.forEach(t -> {
+                System.out.printf("\nID: %d | Nome: %s | Descrição: %s\n", t.getId(), t.getName(), t.getDescription());
+            });
         }
     }
 
@@ -83,9 +96,10 @@ public class MenuCategories {
         Long id = scanner.nextLong();
         scanner.nextLine();
 
-        if (categoryService.removeCategories(id)) {
+        try {
+            categoryService.removeCategories(id);
             System.out.println("Categoria removida com sucesso.");
-        } else {
+        } catch (IllegalArgumentException e) {
             System.out.println("Categoria não encontrada.");
         }
     }

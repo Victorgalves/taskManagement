@@ -12,10 +12,12 @@ public class Responsible {
 
     private Long id;
     private String name;
+    private int ativo;
 
-    public Responsible(Long id, String name) {
+    public Responsible(Long id, String name, int ativo) {
         this.id = id;
         this.name = name;
+        this.ativo = ativo;
     }
 
     public Responsible() {}
@@ -34,5 +36,13 @@ public class Responsible {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(int ativo) {
+        this.ativo = ativo;
     }
 }

@@ -15,6 +15,7 @@ public class Category {
 
     private String name;
     private String description;
+    private int ativo;
 
     @OneToMany(mappedBy = "category")
     private List<Task> tasks;
@@ -23,6 +24,7 @@ public class Category {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.ativo = ativo;
     }
 
     public Category() {}
@@ -48,5 +50,13 @@ public class Category {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(int ativo) {
+        this.ativo = ativo;
     }
 }

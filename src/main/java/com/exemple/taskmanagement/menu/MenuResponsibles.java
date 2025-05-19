@@ -22,9 +22,10 @@ public class MenuResponsibles {
         do {
             System.out.println("\n--- Menu de Responsáveis ---");
             System.out.println("1. Criar novo reponsável");
-            System.out.println("2. Listar reponsáveis");
-            System.out.println("3. Remover reponsável");
-            System.out.println("4. Sair");
+            System.out.println("2. Listar reponsáveis ativos");
+            System.out.println("3. Listar todos reponsáveis");
+            System.out.println("4. Remover reponsável");
+            System.out.println("5. Voltar");
             System.out.print("Escolha uma opção: ");
             System.out.flush();
 
@@ -38,13 +39,14 @@ public class MenuResponsibles {
 
             switch (opcao) {
                 case 1 -> createResponsible();
-                case 2 -> listResponsible();
-                case 3 -> removeResponsible();
-                case 4 -> System.out.println("Saindo...");
+                case 2 -> listResponsibleAtivos();
+                case 3 -> listResponsible();
+                case 4 -> removeResponsible();
+                case 5 -> System.out.println("Saindo...");
                 default -> System.out.println("Opção inválida!");
             }
 
-        } while (opcao != 4);
+        } while (opcao != 5);
     }
 
     private void createResponsible() {
@@ -57,6 +59,17 @@ public class MenuResponsibles {
             System.out.println("Responsável criado(a) com sucesso!");
         } catch (Exception e) {
             System.out.println("Erro: " + e.getMessage());
+        }
+    }
+
+    private void listResponsibleAtivos() {
+        List<Responsible> responsibles = responsibleService.listResponsiblesAtivos();
+        if (responsibles.isEmpty()) {
+            System.out.println("Nenhum(a) responsável encontrada.");
+        } else {
+            responsibles.forEach(t -> {
+                System.out.printf("\nID: %d | Nome: %s\n", t.getId(), t.getName());
+            });
         }
     }
 
@@ -76,10 +89,10 @@ public class MenuResponsibles {
         System.out.flush();
         Long id = scanner.nextLong();
         scanner.nextLine();
-
-        if (responsibleService.removeResponsibles(id)) {
+        try {
+            responsibleService.removeResponsibles(id);
             System.out.println("Responsável removido(a) com sucesso.");
-        } else {
+        } catch (IllegalArgumentException e) {
             System.out.println("Responsável não encontrado(a).");
         }
     }

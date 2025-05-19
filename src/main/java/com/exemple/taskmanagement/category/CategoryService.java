@@ -15,8 +15,13 @@ public class CategoryService {
         Category category = new Category();
         category.setName(name);
         category.setDescription(description);
+        category.setAtivo(1);
 
         return categoryRepository.save(category);
+    }
+
+    public List<Category> listCategoriesAtivos() {
+        return categoryRepository.findByAtivo(1);
     }
 
     public List<Category> listCategories() {
@@ -27,12 +32,10 @@ public class CategoryService {
         return categoryRepository.countTaskCategory();
     }
 
-    public boolean removeCategories(Long id) {
-        if (categoryRepository.existsById(id)) {
-            categoryRepository.deleteById(id);
-            return true;
-        }
-        return false;
+    public void removeCategories(Long id) {
+        Category category = CategoryService.this.categoryRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Categoria não encontrada"));
+        category.setAtivo(0);
+        categoryRepository.save(category);
     }
 
 }
