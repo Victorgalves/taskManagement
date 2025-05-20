@@ -1,6 +1,7 @@
 package com.exemple.taskmanagement.task;
 
 import com.exemple.taskmanagement.category.Category;
+import com.exemple.taskmanagement.category.CategoryService;
 import com.exemple.taskmanagement.responsible.Responsible;
 import com.exemple.taskmanagement.task.Task;
 import com.exemple.taskmanagement.category.CategoryRepository;
@@ -24,6 +25,8 @@ public class TaskService {
 
     @Autowired
     private ResponsibleRepository responsibleRepository;
+
+
 
     public Task createTask(String title, String description, String status, Long categoryId, Long responsibleId) {
         Optional<Category> category = categoryRepository.findById(categoryId);

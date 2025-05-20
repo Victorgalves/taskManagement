@@ -1,10 +1,13 @@
 package com.exemple.taskmanagement.menu;
 
+import com.exemple.taskmanagement.category.Category;
+import com.exemple.taskmanagement.responsible.Responsible;
+import com.exemple.taskmanagement.responsible.ResponsibleService;
 import com.exemple.taskmanagement.task.Task;
 import com.exemple.taskmanagement.task.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
+import com.exemple.taskmanagement.category.CategoryService;
 import java.util.List;
 import java.util.Scanner;
 
@@ -13,6 +16,12 @@ public class MenuTasks {
 
     @Autowired
     private TaskService taskService;
+
+    @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
+    private ResponsibleService responsibleService;
 
     private final Scanner scanner = new Scanner(System.in);
 
@@ -62,9 +71,25 @@ public class MenuTasks {
         System.out.flush();
         String status = scanner.nextLine();
 
+        List<Category> categorias = categoryService.listCategoriesAtivos();
+
+        System.out.println("Categorias ativas:");
+        for (Category categoria : categorias) {
+            System.out.println("ID: " + categoria.getId() + " | Nome: " + categoria.getName());
+        }
+
+
         System.out.print("ID da categoria: ");
         System.out.flush();
         Long categoryId = scanner.nextLong();
+
+        List<Responsible> responsibles = responsibleService.listResponsiblesAtivos();
+
+        System.out.println("Responsáveis ativos:");
+        for (Responsible responsible : responsibles) {
+            System.out.println("ID: " + responsible.getId() + " | Nome: " + responsible.getName());
+        }
+
 
         System.out.print("ID do responsável: ");
         System.out.flush();
